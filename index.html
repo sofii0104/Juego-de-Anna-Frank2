@@ -3,40 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <title>Kitty te Pregunta</title>
-  <link href="https://fonts.googleapis.com/css2?family=8+Bit+Operator&family=TT+Fellows:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="kitty.css">
 </head>
 <body>
   <div class="container">
-
     <!-- Pantalla de inicio -->
     <div id="start-container">
       <h1> Kitty te Pregunta</h1>
-      <input type="text" id="player-name" placeholder="Ingresa tu nombre" />
-      <button id="start-btn">Iniciar juego</button>
+      <input type="text" id="player-name" placeholder="Escribe tu nombre">
+      <button id="start-btn">Iniciar Juego</button>
     </div>
 
-    <!-- Quiz -->
+    <!-- Pantalla del quiz -->
     <div id="quiz-container" class="hidden">
-      <p id="question-number"></p>
+      <h2 id="question-number"></h2>
+      <div id="question-image"></div>
       <div id="question"></div>
       <div id="options"></div>
-      <p id="timer">Tiempo: 10</p>
+      <div id="timer">⏳ 10</div>
     </div>
 
-    <!-- Resultado -->
+    <!-- Pantalla de resultados -->
     <div id="result-container" class="hidden">
       <h2>🎉 Juego terminado 🎉</h2>
-      <p id="final-message">¡Felicidades! Completaste el quiz.</p>
       <p id="score"></p>
+      <div id="final-message"></div>
       <button onclick="location.reload()">Jugar de nuevo</button>
     </div>
-
   </div>
   <script src="kitty.js"></script>
 </body>
 </html>
 
-  <script src="kitty.js"></script>
-</body>
-</html>
