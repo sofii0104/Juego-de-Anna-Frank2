@@ -2,12 +2,12 @@ const questions = [
   {
     question: "¿Cuál era el nombre completo de Ana Frank?",
     options: ["Anna Margot Frank", "Annelies Marie Frank", "Edith Annelies Frank", "Ana Elisabeth Frank"],
-    answer: 1
+    answer: 2
   },
   {
     question: "¿En qué ciudad nació Ana Frank?",
     options: ["Ámsterdam, Países Bajos", "Berlín, Alemania", "Frankfurt am Main, Alemania", "Aachen, Alemania"],
-    answer: 2
+    answer: 4
   },
   {
     question: "¿Por qué la familia Frank se trasladó a Ámsterdam en 1933?",
@@ -17,12 +17,12 @@ const questions = [
       "Porque Edith Frank quería que sus hijas estudiaran en Holanda",
       "Porque Margot recibió una oferta de trabajo en Ámsterdam"
     ],
-    answer: 1
+    answer: 2
   },
   {
     question: "¿Qué objeto recibió Ana el día de su decimotercer cumpleaños que marcó su vida?",
     options: ["Una novela", "Una estrella de David", "Un diario", "Un pasaporte"],
-    answer: 2
+    answer: 3
   },
   {
     question: "¿Dónde se escondió la familia Frank junto con otras personas?",
@@ -32,7 +32,7 @@ const questions = [
       "En la casa de los van Pels en Alemania",
       "En la escuela judía de Ámsterdam"
     ],
-    answer: 1
+    answer: 2
   },
   {
     question: "¿Qué sucedió el 4 de agosto de 1944?",
@@ -42,22 +42,22 @@ const questions = [
       "La Gestapo descubrió el escondite de la familia Frank",
       "Los Frank huyeron a Suiza"
     ],
-    answer: 2
+    answer: 3
   },
   {
     question: "¿En qué campo murieron Ana y su hermana Margot?",
     options: ["Auschwitz", "Westerbork", "Bergen-Belsen", "Sobibor"],
-    answer: 2
+    answer: 3
   },
   {
     question: "¿Quién fue el único sobreviviente del anexo secreto?",
     options: ["Margot Frank", "Otto Frank", "Miep Gies", "Fritz Pfeffer"],
-    answer: 1
+    answer: 2
   },
   {
     question: "¿Cuándo fue publicado el diario de Ana Frank por primera vez?",
     options: ["1939", "1945", "1947", "1960"],
-    answer: 2
+    answer: 3
   },
   {
     question: "¿Qué se convirtió en museo en 1960?",
@@ -67,7 +67,7 @@ const questions = [
       "El anexo secreto en la calle Prinsengracht 263",
       "El campo de concentración de Auschwitz"
     ],
-    answer: 2
+    answer: 3
   }
 ];
 
@@ -77,96 +77,101 @@ let timer;
 let timeLeft = 10;
 
 const startContainer = document.getElementById("start-container");
-const startBtn = document.getElementById("start-btn");
-const playerNameInput = document.getElementById("player-name");
-
-const questionNumber = document.getElementById("question-number");
+const quizContainer = document.getElementById("quiz-container");
+const resultContainer = document.getElementById("result-container");
 const questionElement = document.getElementById("question");
 const optionsElement = document.getElementById("options");
-const resultContainer = document.getElementById("result-container");
-const quizContainer = document.getElementById("quiz-container");
 const scoreElement = document.getElementById("score");
+const questionNumberElement = document.getElementById("question-number");
 const timerElement = document.getElementById("timer");
+const finalMessage = document.getElementById("final-message");
 
-// -------------------- Mezclar arrays --------------------
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
-// -------------------- Inicio del juego --------------------
-startBtn.addEventListener("click", () => {
-  const name = playerNameInput.value.trim();
+document.getElementById("start-btn").addEventListener("click", () => {
+  const name = document.getElementById("player-name").value.trim();
   if (name === "") {
     alert("Por favor ingresa tu nombre");
     return;
   }
   startContainer.classList.add("hidden");
   quizContainer.classList.remove("hidden");
-
   shuffleArray(questions);
-
-  // Mezclar opciones y actualizar índice de respuesta correcta
-  questions.forEach(q => {
-    const correctAnswerText = q.options[q.answer];
-    q.options = shuffleArray([...q.options]);
-    q.answer = q.options.indexOf(correctAnswerText);
-  });
-
-  currentQuestionIndex = 0;
-  score = 0;
   showQuestion();
 });
 
-// -------------------- Mostrar pregunta --------------------
 function showQuestion() {
-  resetTimer();
+  resetState();
   const q = questions[currentQuestionIndex];
-  questionNumber.textContent = `Pregunta ${currentQuestionIndex + 1} de ${questions.length}`;
   questionElement.textContent = q.question;
-  optionsElement.innerHTML = "";
+  questionNumberElement.textContent = `Pregunta ${currentQuestionIndex + 1} de ${questions.length}`;
 
-  q.options.forEach((option, index) => {
+  const shuffledOptions = [...q.options];
+  shuffleArray(shuffledOptions);
+
+  shuffledOptions.forEach((option, index) => {
     const button = document.createElement("button");
     button.textContent = option;
-    button.onclick = () => selectAnswer(index);
+    button.onclick = () => selectAnswer(option, q.answer, q.options);
     optionsElement.appendChild(button);
   });
 
-  startTimer();
+  timeLeft = 10;
+  timerElement.textContent = `⏳ ${timeLeft}`;
+  timer = setInterval(updateTimer, 1000);
 }
 
-// -------------------- Selección de respuesta --------------------
-function selectAnswer(index) {
+function resetState() {
   clearInterval(timer);
-  const q = questions[currentQuestionIndex];
-  const buttons = optionsElement.querySelectorAll("button");
+  optionsElement.innerHTML = "";
+}
 
-  if (index === q.answer) {
-    buttons[index].classList.add("correct");
+function updateTimer() {
+  timeLeft--;
+  timerElement.textContent = `⏳ ${timeLeft}`;
+  if (timeLeft <= 0) {
+    clearInterval(timer);
+    goNext();
+  }
+}
+
+function selectAnswer(selected, correctIndex, originalOptions) {
+  clearInterval(timer);
+  const buttons = optionsElement.querySelectorAll("button");
+  buttons.forEach((btn, i) => {
+    if (btn.textContent === originalOptions[correctIndex]) {
+      btn.classList.add("correct");
+    }
+    if (btn.textContent === selected && selected !== originalOptions[correctIndex]) {
+      btn.classList.add("wrong");
+    }
+    btn.disabled = true;
+  });
+
+  if (selected === originalOptions[correctIndex]) {
     score += 10;
-  } else {
-    if (index >= 0) buttons[index].classList.add("wrong");
-    buttons[q.answer].classList.add("correct");
   }
 
-  buttons.forEach(btn => (btn.disabled = true));
-
-  setTimeout(() => {
-    currentQuestionIndex++;
-    if (currentQuestionIndex < questions.length) {
-      showQuestion();
-    } else {
-      endQuiz();
-    }
-  }, 500);
+  setTimeout(goNext, 1000);
 }
 
-// -------------------- Timer --------------------
-function startTimer() {
-  timeLeft = 10;
-  timerElement.textContent = `Tiempo: ${timeLeft}`;
-  timer = setInterval(() => {
+function goNext() {
+  currentQuestionIndex++;
+  if (currentQuestionIndex < questions.length) {
+    showQuestion();
+  } else {
+    endQuiz();
+  }
+}
+
+function endQuiz() {
+  quizContainer.classList.add("hidden");
+  resultContainer.classList.remove("hidden");
+  scoreElement.textContent = `Puntaje final: ${score}`;
+  finalMessage.innerHTML = `👏 ¡Muy bien! Gracias por jugar `;
+}
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
