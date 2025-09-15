@@ -8,17 +8,30 @@
 </head>
 <body>
   <div class="container">
-    <div id="quiz-container">
-      <h1> Kitty te Pregunta</h1>
+    
+    <!-- Pantalla de inicio -->
+    <div id="start-container">
+      <h1>🐾 Kitty te Pregunta</h1>
+      <input type="text" id="player-name" placeholder="Ingresa tu nombre" />
+      <button id="start-btn">Iniciar juego</button>
+    </div>
+
+    <!-- Quiz -->
+    <div id="quiz-container" class="hidden">
+      <h2 id="welcome"></h2>
       <div id="question"></div>
       <div id="options"></div>
+      <p id="timer">Tiempo: 10</p>
       <button id="next-btn">Siguiente</button>
     </div>
+
+    <!-- Resultado -->
     <div id="result-container" class="hidden">
       <h2>🎉 Juego terminado 🎉</h2>
       <p id="score"></p>
       <button onclick="location.reload()">Jugar de nuevo</button>
     </div>
+    
   </div>
   <script src="kitty.js"></script>
 </body>
