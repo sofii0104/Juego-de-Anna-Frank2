@@ -1,6 +1,20 @@
+@font-face {
+  font-family: "TT Fellows";
+  src: url("fonts/TTFellows.ttf");
+}
+@font-face {
+  font-family: "VCR OSD Mono";
+  src: url("fonts/VCR_OSD_MONO.ttf");
+}
+@font-face {
+  font-family: "8bit Operator";
+  src: url("fonts/8bitOperator.ttf");
+}
+
 body {
-  font-family: 'EB Garamond', serif;
-  background-color: #f5f0e1;
+  background: #111;
+  color: #fff;
+  font-family: "TT Fellows", sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,87 +22,61 @@ body {
   margin: 0;
 }
 
-.container {
-  background-color: #3d2f21;
-  color: #f5f0e1;
-  padding: 20px;
-  border-radius: 16px;
-  width: 500px;
+.game-container {
+  background: #222;
+  padding: 30px;
+  border-radius: 20px;
   text-align: center;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+  width: 650px;
+  box-shadow: 0 0 15px rgba(255,255,255,0.3);
 }
 
-h1 {
+.title {
+  font-family: "8bit Operator", monospace;
+  font-size: 38px;
   margin-bottom: 20px;
-  color: #e8c6a5;
 }
 
-#question {
-  font-size: 20px;
+#question-text {
+  font-family: "VCR OSD Mono", monospace;
+  font-size: 22px;
   margin: 15px 0;
 }
 
-#question-image img {
-  max-width: 80%;
-  height: auto;
-  border-radius: 10px;
-  margin: 10px 0;
+#options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-#options button {
-  display: block;
-  width: 100%;
-  margin: 5px 0;
-  padding: 10px;
+button {
+  background: #00bfff;
   border: none;
-  border-radius: 8px;
-  background-color: #6b3f3b;
-  color: #f5f0e1;
+  padding: 12px;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 16px;
-}
-
-#options button:hover {
-  background-color: #7d523a;
-}
-
-.correct {
-  background-color: #4CAF50 !important;
-}
-
-.wrong {
-  background-color: #d44950 !important;
-}
-
-#timer {
-  margin-top: 10px;
-  font-weight: bold;
   font-size: 18px;
+  font-family: "VCR OSD Mono", monospace;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #0099cc;
 }
 
 .hidden {
   display: none;
 }
 
-input {
-  padding: 8px;
-  border-radius: 8px;
-  border: none;
-  margin-bottom: 10px;
-  width: 80%;
+.question-img {
+  width: 280px;
+  border-radius: 12px;
+  margin: 10px auto;
+  display: block;
 }
 
-button {
-  margin-top: 10px;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background-color: #5a3a2a;
-  color: #f5f0e1;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-button:hover {
-  background-color: #7d523a;
+.final-img {
+  width: 300px;
+  margin-top: 15px;
+  border-radius: 15px;
 }
