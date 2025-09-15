@@ -81,13 +81,22 @@ const startBtn = document.getElementById("start-btn");
 const playerNameInput = document.getElementById("player-name");
 const welcomeText = document.getElementById("welcome");
 
+const questionNumber = document.getElementById("question-number");
 const questionElement = document.getElementById("question");
 const optionsElement = document.getElementById("options");
-const nextButton = document.getElementById("next-btn");
 const resultContainer = document.getElementById("result-container");
 const quizContainer = document.getElementById("quiz-container");
 const scoreElement = document.getElementById("score");
 const timerElement = document.getElementById("timer");
+
+// -------------------- Función para mezclar arrays --------------------
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 
 // -------------------- Inicio del juego --------------------
 startBtn.addEventListener("click", () => {
@@ -99,6 +108,11 @@ startBtn.addEventListener("click", () => {
   welcomeText.textContent = `Hola, ${name}!`;
   startContainer.classList.add("hidden");
   quizContainer.classList.remove("hidden");
+
+  // Mezclar preguntas y opciones
+  shuffleArray(questions);
+  questions.forEach(q => q.options = shuffleArray([...q.options]));
+
   currentQuestionIndex = 0;
   score = 0;
   showQuestion();
@@ -108,6 +122,7 @@ startBtn.addEventListener("click", () => {
 function showQuestion() {
   resetTimer();
   const q = questions[currentQuestionIndex];
+  questionNumber.textContent = `Pregunta ${currentQuestionIndex + 1} de ${questions.length}`;
   questionElement.textContent = q.question;
   optionsElement.innerHTML = "";
 
@@ -127,15 +142,27 @@ function selectAnswer(index) {
   const q = questions[currentQuestionIndex];
   const buttons = optionsElement.querySelectorAll("button");
 
-  if (index === q.answer) {
+  const correctIndex = q.options.indexOf(q.options[q.answer]);
+
+  if (index === correctIndex) {
     buttons[index].classList.add("correct");
     score += 10;
   } else {
     if (index >= 0) buttons[index].classList.add("wrong");
-    buttons[q.answer].classList.add("correct");
+    buttons[correctIndex].classList.add("correct");
   }
 
   buttons.forEach(btn => (btn.disabled = true));
+
+  // Pasar automáticamente a la siguiente pregunta después de 1.2 segundos
+  setTimeout(() => {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+      showQuestion();
+    } else {
+      endQuiz();
+    }
+  }, 1200);
 }
 
 // -------------------- Timer --------------------
@@ -147,7 +174,7 @@ function startTimer() {
     timerElement.textContent = `Tiempo: ${timeLeft}`;
     if (timeLeft <= 0) {
       clearInterval(timer);
-      selectAnswer(-1); // Marca como incorrecta si se acaba el tiempo
+      selectAnswer(-1);
     }
   }, 1000);
 }
@@ -155,16 +182,6 @@ function startTimer() {
 function resetTimer() {
   clearInterval(timer);
 }
-
-// -------------------- Siguiente pregunta --------------------
-nextButton.addEventListener("click", () => {
-  currentQuestionIndex++;
-  if (currentQuestionIndex < questions.length) {
-    showQuestion();
-  } else {
-    endQuiz();
-  }
-});
 
 // -------------------- Fin del quiz --------------------
 function endQuiz() {
