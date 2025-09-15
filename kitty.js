@@ -73,6 +73,13 @@ const questions = [
 
 let currentQuestionIndex = 0;
 let score = 0;
+let timer;
+let timeLeft = 10;
+
+const startContainer = document.getElementById("start-container");
+const startBtn = document.getElementById("start-btn");
+const playerNameInput = document.getElementById("player-name");
+const welcomeText = document.getElementById("welcome");
 
 const questionElement = document.getElementById("question");
 const optionsElement = document.getElementById("options");
@@ -80,8 +87,24 @@ const nextButton = document.getElementById("next-btn");
 const resultContainer = document.getElementById("result-container");
 const quizContainer = document.getElementById("quiz-container");
 const scoreElement = document.getElementById("score");
+const timerElement = document.getElementById("timer");
 
+// -------------------- Inicio del juego --------------------
+startBtn.addEventListener("click", () => {
+  const name = playerNameInput.value.trim();
+  if (name === "") {
+    alert("Por favor ingresa tu nombre");
+    return;
+  }
+  welcomeText.textContent = `Hola, ${name}!`;
+  startContainer.classList.add("hidden");
+  quizContainer.classList.remove("hidden");
+  showQuestion();
+});
+
+// -------------------- Mostrar preguntas --------------------
 function showQuestion() {
+  resetTimer();
   const q = questions[currentQuestionIndex];
   questionElement.textContent = q.question;
   optionsElement.innerHTML = "";
@@ -92,9 +115,13 @@ function showQuestion() {
     button.onclick = () => selectAnswer(index);
     optionsElement.appendChild(button);
   });
+
+  startTimer();
 }
 
+// -------------------- Selección de respuesta --------------------
 function selectAnswer(index) {
+  clearInterval(timer);
   const q = questions[currentQuestionIndex];
   const buttons = optionsElement.querySelectorAll("button");
 
@@ -109,6 +136,25 @@ function selectAnswer(index) {
   buttons.forEach(btn => (btn.disabled = true));
 }
 
+// -------------------- Timer --------------------
+function startTimer() {
+  timeLeft = 10;
+  timerElement.textContent = `Tiempo: ${timeLeft}`;
+  timer = setInterval(() => {
+    timeLeft--;
+    timerElement.textContent = `Tiempo: ${timeLeft}`;
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      selectAnswer(-1); // Marca como incorrecta si se acaba el tiempo
+    }
+  }, 1000);
+}
+
+function resetTimer() {
+  clearInterval(timer);
+}
+
+// -------------------- Siguiente pregunta --------------------
 nextButton.addEventListener("click", () => {
   currentQuestionIndex++;
   if (currentQuestionIndex < questions.length) {
@@ -118,10 +164,9 @@ nextButton.addEventListener("click", () => {
   }
 });
 
+// -------------------- Fin del quiz --------------------
 function endQuiz() {
   quizContainer.classList.add("hidden");
   resultContainer.classList.remove("hidden");
   scoreElement.textContent = `Puntaje final: ${score}`;
 }
-
-showQuestion();
