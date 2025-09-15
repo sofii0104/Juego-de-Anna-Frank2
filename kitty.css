@@ -1,20 +1,21 @@
 @font-face {
-  font-family: "TT Fellows";
-  src: url("fonts/TTFellows.ttf");
+  font-family: 'TTFellows';
+  src: url('fonts/TTFellows.ttf') format('truetype');
 }
+
 @font-face {
-  font-family: "VCR OSD Mono";
-  src: url("fonts/VCR_OSD_MONO.ttf");
+  font-family: 'VCR';
+  src: url('fonts/VCR_OSD_MONO.ttf') format('truetype');
 }
+
 @font-face {
-  font-family: "8bit Operator";
-  src: url("fonts/8bitOperator.ttf");
+  font-family: 'EightBit';
+  src: url('fonts/8bitOperator.ttf') format('truetype');
 }
 
 body {
-  background: #111;
-  color: #fff;
-  font-family: "TT Fellows", sans-serif;
+  font-family: 'VCR', monospace;
+  background-color: #f5f0e1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,61 +23,73 @@ body {
   margin: 0;
 }
 
-.game-container {
-  background: #222;
+.container {
+  background-color: #3d2f21;
+  color: #f5f0e1;
   padding: 30px;
-  border-radius: 20px;
+  border-radius: 15px;
+  width: 500px;
   text-align: center;
-  width: 650px;
-  box-shadow: 0 0 15px rgba(255,255,255,0.3);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
 }
 
-.title {
-  font-family: "8bit Operator", monospace;
-  font-size: 38px;
+h1 {
+  font-family: 'EightBit', monospace;
+  font-size: 28px;
   margin-bottom: 20px;
+  color: #e8c6a5;
 }
 
-#question-text {
-  font-family: "VCR OSD Mono", monospace;
-  font-size: 22px;
-  margin: 15px 0;
-}
-
-#options {
+#quiz-header {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+#question {
+  font-size: 20px;
+  margin-bottom: 15px;
+  font-family: 'TTFellows', sans-serif;
+}
+
+#options button {
+  display: block;
+  width: 100%;
+  margin: 6px 0;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background-color: #6b3f3b;
+  color: #f5f0e1;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: 'TTFellows', sans-serif;
+}
+
+#options button:hover {
+  background-color: #7d523a;
+}
+
+.correct {
+  background-color: #4CAF50 !important;
+}
+
+.wrong {
+  background-color: #d44950 !important;
 }
 
 button {
-  background: #00bfff;
+  margin-top: 15px;
+  padding: 10px 15px;
   border: none;
-  padding: 12px;
-  border-radius: 10px;
+  border-radius: 8px;
+  background-color: #5a3a2a;
+  color: #f5f0e1;
   cursor: pointer;
-  font-size: 18px;
-  font-family: "VCR OSD Mono", monospace;
-  transition: 0.2s;
-}
-
-button:hover {
-  background: #0099cc;
+  font-size: 16px;
 }
 
 .hidden {
   display: none;
-}
-
-.question-img {
-  width: 280px;
-  border-radius: 12px;
-  margin: 10px auto;
-  display: block;
-}
-
-.final-img {
-  width: 300px;
-  margin-top: 15px;
-  border-radius: 15px;
 }
