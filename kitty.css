@@ -1,5 +1,5 @@
 body {
-  font-family: 'TT Fellows', sans-serif;
+  font-family: 'TT Fellows', sans-serif; /* Ahora TT Fellows en todo el cuerpo */
   background-color: #f5f0e1;
   display: flex;
   justify-content: center;
@@ -19,7 +19,7 @@ body {
 }
 
 h1 {
-  font-family: '8 Bit Operator', sans-serif;
+  font-family: '8 Bit Operator', sans-serif; /* Solo el título mantiene 8 Bit Operator */
   font-size: 32px;
   color: #e8c6a5;
   margin-bottom: 20px;
@@ -40,7 +40,7 @@ h2 {
 #question {
   font-size: 20px;
   margin-bottom: 15px;
-  font-family: 'TT Fellows', sans-serif;
+  font-family: 'TT Fellows', sans-serif; /* Pregunta en TT Fellows */
 }
 
 #options button {
@@ -54,7 +54,7 @@ h2 {
   color: #f5f0e1;
   cursor: pointer;
   font-size: 16px;
-  font-family: 'TT Fellows', sans-serif;
+  font-family: 'TT Fellows', sans-serif; /* Opciones en TT Fellows */
 }
 
 #options button:hover {
@@ -89,3 +89,4 @@ h2 {
 .hidden {
   display: none;
 }
+
