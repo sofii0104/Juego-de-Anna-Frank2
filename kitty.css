@@ -1,5 +1,5 @@
 body {
-  font-family: 'EB Garamond', serif;
+  font-family: 'VCR OSD Mono', monospace;
   background-color: #f5f0e1;
   display: flex;
   justify-content: center;
@@ -11,33 +11,50 @@ body {
 .container {
   background-color: #3d2f21;
   color: #f5f0e1;
-  padding: 20px;
+  padding: 30px;
   border-radius: 12px;
-  width: 400px;
+  width: 500px; /* más grande */
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
 }
 
-h1, h2 {
+h1 {
+  font-family: '8 Bit Operator', sans-serif;
+  font-size: 32px;
+  color: #e8c6a5;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-family: 'VCR OSD Mono', monospace;
+  color: #e8c6a5;
+}
+
+#question-number {
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 16px;
   color: #e8c6a5;
 }
 
 #question {
   font-size: 20px;
   margin-bottom: 15px;
+  font-family: 'VCR OSD Mono', monospace;
 }
 
 #options button {
   display: block;
   width: 100%;
   margin: 5px 0;
-  padding: 10px;
+  padding: 12px;
   border: none;
   border-radius: 8px;
   background-color: #6b3f3b;
   color: #f5f0e1;
   cursor: pointer;
   font-size: 16px;
+  font-family: 'VCR OSD Mono', monospace;
 }
 
 #options button:hover {
@@ -52,23 +69,14 @@ h1, h2 {
   background-color: #d44950 !important;
 }
 
-#next-btn {
-  margin-top: 15px;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background-color: #5a3a2a;
-  color: #f5f0e1;
-  cursor: pointer;
-}
-
 #player-name {
   width: 80%;
-  padding: 10px;
+  padding: 12px;
   margin: 10px 0;
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 16px;
+  font-family: 'VCR OSD Mono', monospace;
 }
 
 #timer {
