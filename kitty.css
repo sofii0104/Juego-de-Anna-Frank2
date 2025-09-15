@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'EB Garamond', serif;
   background-color: #f5f0e1;
   display: flex;
   justify-content: center;
@@ -11,24 +11,16 @@ body {
 .container {
   background-color: #3d2f21;
   color: #f5f0e1;
-  padding: 30px;
-  border-radius: 15px;
-  width: 500px;
+  padding: 20px;
+  border-radius: 12px;
+  width: 400px;
   text-align: center;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
 h1 {
-  font-size: 26px;
   margin-bottom: 20px;
   color: #e8c6a5;
-}
-
-#quiz-header {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 15px;
-  font-size: 18px;
 }
 
 #question {
@@ -39,10 +31,10 @@ h1 {
 #options button {
   display: block;
   width: 100%;
-  margin: 6px 0;
-  padding: 12px;
+  margin: 5px 0;
+  padding: 10px;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   background-color: #6b3f3b;
   color: #f5f0e1;
   cursor: pointer;
@@ -61,15 +53,14 @@ h1 {
   background-color: #d44950 !important;
 }
 
-button {
+#next-btn {
   margin-top: 15px;
-  padding: 10px 15px;
+  padding: 10px;
   border: none;
   border-radius: 8px;
   background-color: #5a3a2a;
   color: #f5f0e1;
   cursor: pointer;
-  font-size: 16px;
 }
 
 .hidden {
