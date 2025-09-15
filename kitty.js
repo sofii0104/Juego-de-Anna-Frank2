@@ -161,7 +161,7 @@ function selectAnswer(index) {
     } else {
       endQuiz();
     }
-  }, 1200);
+  }, 500);
 }
 
 // -------------------- Timer --------------------
@@ -175,7 +175,7 @@ function startTimer() {
       clearInterval(timer);
       selectAnswer(-1);
     }
-  }, 500);
+  }, 1000);
 }
 
 function resetTimer() {
