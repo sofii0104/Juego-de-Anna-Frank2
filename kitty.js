@@ -79,7 +79,6 @@ let timeLeft = 10;
 const startContainer = document.getElementById("start-container");
 const startBtn = document.getElementById("start-btn");
 const playerNameInput = document.getElementById("player-name");
-const welcomeText = document.getElementById("welcome");
 
 const questionNumber = document.getElementById("question-number");
 const questionElement = document.getElementById("question");
@@ -153,7 +152,7 @@ function selectAnswer(index) {
 
   buttons.forEach(btn => (btn.disabled = true));
 
-  // Pasar automáticamente a la siguiente pregunta después de 1.2 segundos
+  // Pasar automáticamente a la siguiente pregunta después de 0.5 segundos
   setTimeout(() => {
     currentQuestionIndex++;
     if (currentQuestionIndex < questions.length) {
@@ -186,5 +185,9 @@ function resetTimer() {
 function endQuiz() {
   quizContainer.classList.add("hidden");
   resultContainer.classList.remove("hidden");
+
+  const finalMessage = document.getElementById("final-message");
+  finalMessage.textContent = `¡Felicidades! Completaste el quiz con un puntaje de ${score}.`;
+
   scoreElement.textContent = `Puntaje final: ${score}`;
 }
