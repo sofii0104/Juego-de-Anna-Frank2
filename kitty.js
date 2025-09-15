@@ -107,9 +107,15 @@ startBtn.addEventListener("click", () => {
   startContainer.classList.add("hidden");
   quizContainer.classList.remove("hidden");
 
-  // Mezclar preguntas y opciones
+  // Mezclar preguntas
   shuffleArray(questions);
-  questions.forEach(q => q.options = shuffleArray([...q.options]));
+
+  // Mezclar opciones y actualizar índice correcto
+  questions.forEach(q => {
+    const correctAnswerText = q.options[q.answer];
+    q.options = shuffleArray([...q.options]);
+    q.answer = q.options.indexOf(correctAnswerText); // nuevo índice correcto
+  });
 
   currentQuestionIndex = 0;
   score = 0;
@@ -140,14 +146,12 @@ function selectAnswer(index) {
   const q = questions[currentQuestionIndex];
   const buttons = optionsElement.querySelectorAll("button");
 
-  const correctIndex = q.options.indexOf(q.options[q.answer]);
-
-  if (index === correctIndex) {
+  if (index === q.answer) {
     buttons[index].classList.add("correct");
     score += 10;
   } else {
     if (index >= 0) buttons[index].classList.add("wrong");
-    buttons[correctIndex].classList.add("correct");
+    buttons[q.answer].classList.add("correct");
   }
 
   buttons.forEach(btn => (btn.disabled = true));
