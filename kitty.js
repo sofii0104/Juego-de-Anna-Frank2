@@ -175,7 +175,7 @@ function startTimer() {
       clearInterval(timer);
       selectAnswer(-1);
     }
-  }, 1000);
+  }, 500);
 }
 
 function resetTimer() {
