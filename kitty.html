@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Kitty te Pregunta</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="kitty.css">
+</head>
+<body>
+  <div class="container">
+    <div id="quiz-container">
+      <h1> Kitty te Pregunta</h1>
+      <div id="question"></div>
+      <div id="options"></div>
+      <button id="next-btn">Siguiente</button>
+    </div>
+    <div id="result-container" class="hidden">
+      <h2>🎉 Juego terminado 🎉</h2>
+      <p id="score"></p>
+      <button onclick="location.reload()">Jugar de nuevo</button>
+    </div>
+  </div>
+  <script src="kitty.js"></script>
+</body>
+</html>
