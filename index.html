@@ -2,23 +2,37 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kitty te Pregunta</title>
   <link rel="stylesheet" href="style.css">
-  <script defer src="script.js"></script>
 </head>
 <body>
-  <div class="game-container">
-    <h1 class="title">Kitty te Pregunta</h1>
-    <div id="start-screen">
+  <div class="container">
+    <!-- Pantalla inicial -->
+    <div id="start-container">
+      <h1>🐾 Kitty te Pregunta</h1>
+      <input type="text" id="player-name" placeholder="Escribe tu nombre">
       <button id="start-btn">Iniciar Juego</button>
     </div>
-    <div id="quiz-screen" class="hidden">
-      <div id="question-number"></div>
-      <img id="question-image" class="question-img" src="" alt="">
-      <h2 id="question-text"></h2>
+
+    <!-- Quiz -->
+    <div id="quiz-container" class="hidden">
+      <div id="quiz-header">
+        <div id="question-number"></div>
+        <div id="timer">⏳ 10</div>
+      </div>
+      <div id="question"></div>
       <div id="options"></div>
     </div>
-    <div id="end-screen" class="hidden">
-      <h2>🎉 ¡Felicidades! 🎉</h2>
-      <p>Has terminado el quiz. Ana está orgullosa de ti 💙</p>
+
+    <!-- Resultados -->
+    <div id="result-container" class="hidden">
+      <h2>🎉 Juego terminado 🎉</h2>
+      <p id="score"></p>
+      <div id="final-message"></div>
+      <button onclick="location.reload()">Jugar de nuevo</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
