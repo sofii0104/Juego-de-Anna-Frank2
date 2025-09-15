@@ -74,86 +74,54 @@ const questions = [
 let currentQuestionIndex = 0;
 let score = 0;
 
-const startContainer = document.getElementById("start-container");
-const quizContainer = document.getElementById("quiz-container");
-const resultContainer = document.getElementById("result-container");
 const questionElement = document.getElementById("question");
 const optionsElement = document.getElementById("options");
+const nextButton = document.getElementById("next-btn");
+const resultContainer = document.getElementById("result-container");
+const quizContainer = document.getElementById("quiz-container");
 const scoreElement = document.getElementById("score");
-const questionNumberElement = document.getElementById("question-number");
-const finalMessage = document.getElementById("final-message");
-
-document.getElementById("start-btn").addEventListener("click", () => {
-  const name = document.getElementById("player-name").value.trim();
-  if (name === "") {
-    alert("Por favor ingresa tu nombre");
-    return;
-  }
-  startContainer.classList.add("hidden");
-  quizContainer.classList.remove("hidden");
-  shuffleArray(questions);
-  showQuestion();
-});
 
 function showQuestion() {
-  resetState();
   const q = questions[currentQuestionIndex];
   questionElement.textContent = q.question;
-  questionNumberElement.textContent = `Pregunta ${currentQuestionIndex + 1} de ${questions.length}`;
+  optionsElement.innerHTML = "";
 
-  const shuffledOptions = [...q.options];
-  shuffleArray(shuffledOptions);
-
-  shuffledOptions.forEach(option => {
+  q.options.forEach((option, index) => {
     const button = document.createElement("button");
     button.textContent = option;
-    button.onclick = () => selectAnswer(option, q.answer, q.options);
+    button.onclick = () => selectAnswer(index);
     optionsElement.appendChild(button);
   });
 }
 
-function resetState() {
-  optionsElement.innerHTML = "";
-}
-
-function selectAnswer(selected, correctIndex, originalOptions) {
+function selectAnswer(index) {
+  const q = questions[currentQuestionIndex];
   const buttons = optionsElement.querySelectorAll("button");
-  buttons.forEach(btn => {
-    if (btn.textContent === originalOptions[correctIndex]) {
-      btn.classList.add("correct");
-    }
-    if (btn.textContent === selected && selected !== originalOptions[correctIndex]) {
-      btn.classList.add("wrong");
-    }
-    btn.disabled = true;
-  });
 
-  if (selected === originalOptions[correctIndex]) {
+  if (index === q.answer) {
+    buttons[index].classList.add("correct");
     score += 10;
+  } else {
+    buttons[index].classList.add("wrong");
+    buttons[q.answer].classList.add("correct");
   }
 
-  setTimeout(goNext, 800);
+  buttons.forEach(btn => (btn.disabled = true));
 }
 
-function goNext() {
+nextButton.addEventListener("click", () => {
   currentQuestionIndex++;
   if (currentQuestionIndex < questions.length) {
     showQuestion();
   } else {
     endQuiz();
   }
-}
+});
 
 function endQuiz() {
   quizContainer.classList.add("hidden");
   resultContainer.classList.remove("hidden");
   scoreElement.textContent = `Puntaje final: ${score}`;
-  finalMessage.textContent = "👏 ¡Muy bien! Gracias por jugar 🐾";
 }
 
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
+showQuestion();
