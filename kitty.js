@@ -99,6 +99,8 @@ startBtn.addEventListener("click", () => {
   welcomeText.textContent = `Hola, ${name}!`;
   startContainer.classList.add("hidden");
   quizContainer.classList.remove("hidden");
+  currentQuestionIndex = 0;
+  score = 0;
   showQuestion();
 });
 
@@ -129,7 +131,7 @@ function selectAnswer(index) {
     buttons[index].classList.add("correct");
     score += 10;
   } else {
-    buttons[index].classList.add("wrong");
+    if (index >= 0) buttons[index].classList.add("wrong");
     buttons[q.answer].classList.add("correct");
   }
 
