@@ -2,12 +2,12 @@ const questions = [
   {
     question: "¿Cuál era el nombre completo de Ana Frank?",
     options: ["Anna Margot Frank", "Annelies Marie Frank", "Edith Annelies Frank", "Ana Elisabeth Frank"],
-    answer: 2
+    answer: 1
   },
   {
     question: "¿En qué ciudad nació Ana Frank?",
     options: ["Ámsterdam, Países Bajos", "Berlín, Alemania", "Frankfurt am Main, Alemania", "Aachen, Alemania"],
-    answer: 4
+    answer: 2
   },
   {
     question: "¿Por qué la familia Frank se trasladó a Ámsterdam en 1933?",
@@ -17,12 +17,12 @@ const questions = [
       "Porque Edith Frank quería que sus hijas estudiaran en Holanda",
       "Porque Margot recibió una oferta de trabajo en Ámsterdam"
     ],
-    answer: 2
+    answer: 1
   },
   {
     question: "¿Qué objeto recibió Ana el día de su decimotercer cumpleaños que marcó su vida?",
     options: ["Una novela", "Una estrella de David", "Un diario", "Un pasaporte"],
-    answer: 3
+    answer: 2
   },
   {
     question: "¿Dónde se escondió la familia Frank junto con otras personas?",
@@ -32,7 +32,7 @@ const questions = [
       "En la casa de los van Pels en Alemania",
       "En la escuela judía de Ámsterdam"
     ],
-    answer: 2
+    answer: 1
   },
   {
     question: "¿Qué sucedió el 4 de agosto de 1944?",
@@ -42,22 +42,22 @@ const questions = [
       "La Gestapo descubrió el escondite de la familia Frank",
       "Los Frank huyeron a Suiza"
     ],
-    answer: 3
+    answer: 2
   },
   {
     question: "¿En qué campo murieron Ana y su hermana Margot?",
     options: ["Auschwitz", "Westerbork", "Bergen-Belsen", "Sobibor"],
-    answer: 3
+    answer: 2
   },
   {
     question: "¿Quién fue el único sobreviviente del anexo secreto?",
     options: ["Margot Frank", "Otto Frank", "Miep Gies", "Fritz Pfeffer"],
-    answer: 2
+    answer: 1
   },
   {
     question: "¿Cuándo fue publicado el diario de Ana Frank por primera vez?",
     options: ["1939", "1945", "1947", "1960"],
-    answer: 3
+    answer: 2
   },
   {
     question: "¿Qué se convirtió en museo en 1960?",
@@ -67,14 +67,12 @@ const questions = [
       "El anexo secreto en la calle Prinsengracht 263",
       "El campo de concentración de Auschwitz"
     ],
-    answer: 3
+    answer: 2
   }
 ];
 
 let currentQuestionIndex = 0;
 let score = 0;
-let timer;
-let timeLeft = 10;
 
 const startContainer = document.getElementById("start-container");
 const quizContainer = document.getElementById("quiz-container");
@@ -83,7 +81,6 @@ const questionElement = document.getElementById("question");
 const optionsElement = document.getElementById("options");
 const scoreElement = document.getElementById("score");
 const questionNumberElement = document.getElementById("question-number");
-const timerElement = document.getElementById("timer");
 const finalMessage = document.getElementById("final-message");
 
 document.getElementById("start-btn").addEventListener("click", () => {
@@ -107,36 +104,21 @@ function showQuestion() {
   const shuffledOptions = [...q.options];
   shuffleArray(shuffledOptions);
 
-  shuffledOptions.forEach((option, index) => {
+  shuffledOptions.forEach(option => {
     const button = document.createElement("button");
     button.textContent = option;
     button.onclick = () => selectAnswer(option, q.answer, q.options);
     optionsElement.appendChild(button);
   });
-
-  timeLeft = 10;
-  timerElement.textContent = `⏳ ${timeLeft}`;
-  timer = setInterval(updateTimer, 1000);
 }
 
 function resetState() {
-  clearInterval(timer);
   optionsElement.innerHTML = "";
 }
 
-function updateTimer() {
-  timeLeft--;
-  timerElement.textContent = `⏳ ${timeLeft}`;
-  if (timeLeft <= 0) {
-    clearInterval(timer);
-    goNext();
-  }
-}
-
 function selectAnswer(selected, correctIndex, originalOptions) {
-  clearInterval(timer);
   const buttons = optionsElement.querySelectorAll("button");
-  buttons.forEach((btn, i) => {
+  buttons.forEach(btn => {
     if (btn.textContent === originalOptions[correctIndex]) {
       btn.classList.add("correct");
     }
@@ -150,7 +132,7 @@ function selectAnswer(selected, correctIndex, originalOptions) {
     score += 10;
   }
 
-  setTimeout(goNext, 1000);
+  setTimeout(goNext, 800);
 }
 
 function goNext() {
@@ -166,7 +148,7 @@ function endQuiz() {
   quizContainer.classList.add("hidden");
   resultContainer.classList.remove("hidden");
   scoreElement.textContent = `Puntaje final: ${score}`;
-  finalMessage.innerHTML = `👏 ¡Muy bien! Gracias por jugar `;
+  finalMessage.textContent = "👏 ¡Muy bien! Gracias por jugar 🐾";
 }
 
 function shuffleArray(array) {
