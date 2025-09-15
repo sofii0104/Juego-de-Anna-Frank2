@@ -88,7 +88,7 @@ const quizContainer = document.getElementById("quiz-container");
 const scoreElement = document.getElementById("score");
 const timerElement = document.getElementById("timer");
 
-// -------------------- Función para mezclar arrays --------------------
+// -------------------- Mezclar arrays --------------------
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -107,14 +107,13 @@ startBtn.addEventListener("click", () => {
   startContainer.classList.add("hidden");
   quizContainer.classList.remove("hidden");
 
-  // Mezclar preguntas
   shuffleArray(questions);
 
-  // Mezclar opciones y actualizar índice correcto
+  // Mezclar opciones y actualizar índice de respuesta correcta
   questions.forEach(q => {
     const correctAnswerText = q.options[q.answer];
     q.options = shuffleArray([...q.options]);
-    q.answer = q.options.indexOf(correctAnswerText); // nuevo índice correcto
+    q.answer = q.options.indexOf(correctAnswerText);
   });
 
   currentQuestionIndex = 0;
@@ -122,7 +121,7 @@ startBtn.addEventListener("click", () => {
   showQuestion();
 });
 
-// -------------------- Mostrar preguntas --------------------
+// -------------------- Mostrar pregunta --------------------
 function showQuestion() {
   resetTimer();
   const q = questions[currentQuestionIndex];
@@ -156,7 +155,6 @@ function selectAnswer(index) {
 
   buttons.forEach(btn => (btn.disabled = true));
 
-  // Pasar automáticamente a la siguiente pregunta después de 0.5 segundos
   setTimeout(() => {
     currentQuestionIndex++;
     if (currentQuestionIndex < questions.length) {
@@ -172,26 +170,3 @@ function startTimer() {
   timeLeft = 10;
   timerElement.textContent = `Tiempo: ${timeLeft}`;
   timer = setInterval(() => {
-    timeLeft--;
-    timerElement.textContent = `Tiempo: ${timeLeft}`;
-    if (timeLeft <= 0) {
-      clearInterval(timer);
-      selectAnswer(-1);
-    }
-  }, 1000);
-}
-
-function resetTimer() {
-  clearInterval(timer);
-}
-
-// -------------------- Fin del quiz --------------------
-function endQuiz() {
-  quizContainer.classList.add("hidden");
-  resultContainer.classList.remove("hidden");
-
-  const finalMessage = document.getElementById("final-message");
-  finalMessage.textContent = `¡Felicidades! Completaste el quiz con un puntaje de ${score}.`;
-
-  scoreElement.textContent = `Puntaje final: ${score}`;
-}
