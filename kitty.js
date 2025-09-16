@@ -1,4 +1,5 @@
-const questions = [
+// Preguntas y respuestas
+let questions = [
   {
     question: "¿Cuál era el nombre completo de Ana Frank?",
     options: ["Anna Margot Frank", "Annelies Marie Frank", "Edith Annelies Frank", "Ana Elisabeth Frank"],
@@ -71,57 +72,105 @@ const questions = [
   }
 ];
 
+// Variables
+let shuffledQuestions = [];
 let currentQuestionIndex = 0;
 let score = 0;
+let playerName = "";
 
+// Elementos del DOM
+const startContainer = document.getElementById("start-container");
+const quizContainer = document.getElementById("quiz-container");
+const resultContainer = document.getElementById("result-container");
+const greeting = document.getElementById("greeting");
 const questionElement = document.getElementById("question");
 const optionsElement = document.getElementById("options");
-const nextButton = document.getElementById("next-btn");
-const resultContainer = document.getElementById("result-container");
-const quizContainer = document.getElementById("quiz-container");
 const scoreElement = document.getElementById("score");
+const messageElement = document.getElementById("message");
+const startButton = document.getElementById("start-btn");
 
+// Mezclar arrays (para preguntas y opciones)
+function shuffleArray(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+// Iniciar juego
+startButton.addEventListener("click", () => {
+  const input = document.getElementById("player-name").value.trim();
+  if (!input) {
+    alert("Por favor, ingresa tu nombre");
+    return;
+  }
+  playerName = input;
+
+  // 🔹 Ocultar pantalla inicial y mostrar preguntas
+  startContainer.classList.add("hidden");
+  quizContainer.classList.remove("hidden");
+
+  shuffledQuestions = shuffleArray([...questions]);
+  currentQuestionIndex = 0;
+  score = 0;
+  greeting.textContent = `¡Suerte, ${playerName}!`;
+  showQuestion();
+});
+
+// Mostrar pregunta
 function showQuestion() {
-  const q = questions[currentQuestionIndex];
+  const q = shuffledQuestions[currentQuestionIndex];
   questionElement.textContent = q.question;
   optionsElement.innerHTML = "";
 
-  q.options.forEach((option, index) => {
+  let shuffledOptions = shuffleArray([...q.options]);
+
+  shuffledOptions.forEach(option => {
     const button = document.createElement("button");
     button.textContent = option;
-    button.onclick = () => selectAnswer(index);
+    button.onclick = () => selectAnswer(option, q);
     optionsElement.appendChild(button);
   });
 }
 
-function selectAnswer(index) {
-  const q = questions[currentQuestionIndex];
+// Seleccionar respuesta
+function selectAnswer(selected, q) {
+  const correctAnswer = q.options[q.answer];
   const buttons = optionsElement.querySelectorAll("button");
 
-  if (index === q.answer) {
-    buttons[index].classList.add("correct");
+  buttons.forEach(btn => {
+    btn.disabled = true;
+    if (btn.textContent === correctAnswer) {
+      btn.classList.add("correct");
+    }
+    if (btn.textContent === selected && selected !== correctAnswer) {
+      btn.classList.add("wrong");
+    }
+  });
+
+  if (selected === correctAnswer) {
     score += 10;
-  } else {
-    buttons[index].classList.add("wrong");
-    buttons[q.answer].classList.add("correct");
   }
 
-  buttons.forEach(btn => (btn.disabled = true));
+  setTimeout(nextQuestion, 1200);
 }
 
-nextButton.addEventListener("click", () => {
+// Siguiente pregunta
+function nextQuestion() {
   currentQuestionIndex++;
-  if (currentQuestionIndex < questions.length) {
+  if (currentQuestionIndex < shuffledQuestions.length) {
     showQuestion();
   } else {
     endQuiz();
   }
-});
+}
 
+// Terminar juego
 function endQuiz() {
   quizContainer.classList.add("hidden");
   resultContainer.classList.remove("hidden");
-  scoreElement.textContent = `Puntaje final: ${score}`;
+  scoreElement.textContent = `${playerName}, tu puntaje final es: ${score}`;
+  messageElement.textContent =
+    score >= 80
+      ? "¡Excelente trabajo! 🌟"
+      : score >= 50
+      ? "¡Muy bien! Sigue aprendiendo 📚"
+      : "¡No te rindas! Intenta de nuevo 💪";
 }
-
-showQuestion();
