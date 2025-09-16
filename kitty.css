@@ -18,9 +18,31 @@ body {
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
-h1 {
-  margin-bottom: 20px;
+h1, h2 {
   color: #e8c6a5;
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #7d523a;
+  border-radius: 8px;
+  width: 80%;
+  margin: 10px 0;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: #6b3f3b;
+  color: #f5f0e1;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #7d523a;
 }
 
 #question {
@@ -35,14 +57,14 @@ h1 {
   padding: 10px;
   border: none;
   border-radius: 8px;
-  background-color: #6b3f3b;
+  background-color: #4b3b35;
   color: #f5f0e1;
   cursor: pointer;
   font-size: 16px;
 }
 
 #options button:hover {
-  background-color: #7d523a;
+  background-color: #5a3a2a;
 }
 
 .correct {
@@ -51,16 +73,6 @@ h1 {
 
 .wrong {
   background-color: #d44950 !important;
-}
-
-#next-btn {
-  margin-top: 15px;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  background-color: #5a3a2a;
-  color: #f5f0e1;
-  cursor: pointer;
 }
 
 .hidden {
